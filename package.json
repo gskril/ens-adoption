@@ -1,0 +1,23 @@
+{
+  "name": "ens-adoption-daos",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf ./dist",
+    "dev": "tsc && node ./dist/index.js",
+    "start": "tsc && node ./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "got": "^12.6.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.15.0",
+    "prettier": "^2.8.4",
+    "typescript": "^4.9.5"
+  }
+}
