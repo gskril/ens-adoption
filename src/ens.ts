@@ -24,9 +24,10 @@ export async function getProfiles(addresses: string[]) {
     )
   )
 
-  const cleanedProfiles = profiles.map((profile) => {
+  const cleanedProfiles = profiles.map((profile, index) => {
     return {
       name: profile?.name,
+      address: addresses[index],
       textRecords: profile?.records?.texts?.reduce(
         (acc: { [key: string]: string }[], record) => {
           acc.push({ [record.key]: record.value })

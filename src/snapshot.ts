@@ -2,7 +2,7 @@ import { request, gql } from 'graphql-request'
 
 import { SNAPSHOT_HUB_API } from './constants.js'
 
-export async function getTopVoters(spaces: string[]) {
+export async function getTopVoters(space: string) {
   const topVotersQuery = gql`
     query ($spaces: [String]) {
       votes(
@@ -27,7 +27,7 @@ export async function getTopVoters(spaces: string[]) {
     SNAPSHOT_HUB_API,
     topVotersQuery,
     {
-      spaces,
+      spaces: [space],
     }
   ).then((data) => data.votes)
 
@@ -35,5 +35,8 @@ export async function getTopVoters(spaces: string[]) {
     ...new Set(topVotes.map((vote) => vote.voter)),
   ].slice(0, 100)
 
-  return uniqueTopVoters
+  return {
+    dao: space,
+    addresses: uniqueTopVoters,
+  }
 }

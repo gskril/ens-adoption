@@ -3,8 +3,9 @@ import 'dotenv/config'
 import { getProfiles } from './ens.js'
 import { getTopVoters } from './snapshot.js'
 
-const topVoters = await getTopVoters(['ens.eth'])
-const profiles = await getProfiles(topVoters)
+const space = 'ens.eth'
+const topVoters = await getTopVoters(space)
+const profiles = await getProfiles(topVoters.addresses)
 
 // count number of profiles that have a name
 const profilesWithNames = profiles.filter(
@@ -12,8 +13,8 @@ const profilesWithNames = profiles.filter(
 ).length
 
 // count number of profiles that have certain text records
-const records = profiles.reduce((acc: { [key: string]: number }, profile) => {
-  acc['topVoters'] = topVoters.length
+const stats = profiles.reduce((acc: { [key: string]: number }, profile) => {
+  acc['topVoters'] = topVoters.addresses.length
   acc['profilesWithNames'] = profilesWithNames
 
   profile.textRecords?.forEach((record) => {
@@ -27,6 +28,12 @@ const records = profiles.reduce((acc: { [key: string]: number }, profile) => {
   return acc
 }, {})
 
-console.log(records)
+const result = {
+  space,
+  profiles,
+  stats,
+}
+
+console.log(result)
 
 // TODO: refactor script to work across multiple Snapshot Spaces
