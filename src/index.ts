@@ -1,37 +1,32 @@
-import { request, gql } from 'graphql-request'
+import 'dotenv/config'
 
-import { SNAPSHOT_HUB_API } from './constants.js'
+import { getProfiles } from './ens.js'
+import { getTopVoters } from './snapshot.js'
 
-const topVotersQuery = gql`
-  query ($spaces: [String]) {
-    votes(
-      first: 1000
-      orderBy: "vp"
-      where: { created_gte: 1662678000, space_in: $spaces }
-    ) {
-      proposal {
-        title
-      }
-      space {
-        id
-      }
-      voter
-      created
-      vp
+const topVoters = await getTopVoters(['ens.eth'])
+const profiles = await getProfiles(topVoters)
+
+// count number of profiles that have a name
+const profilesWithNames = profiles.filter(
+  (profile) => profile.name !== undefined
+).length
+
+// count number of profiles that have certain text records
+const records = profiles.reduce((acc: { [key: string]: number }, profile) => {
+  acc['topVoters'] = topVoters.length
+  acc['profilesWithNames'] = profilesWithNames
+
+  profile.textRecords?.forEach((record) => {
+    const key = Object.keys(record)[0]
+    if (acc[key]) {
+      acc[key]++
+    } else {
+      acc[key] = 1
     }
-  }
-`
+  })
+  return acc
+}, {})
 
-const topVotes = await request<{ votes: SnapshotVote[] }>(
-  SNAPSHOT_HUB_API,
-  topVotersQuery,
-  {
-    spaces: ['ens.eth'], // just use one space for testing
-  }
-).then((data) => data.votes)
+console.log(records)
 
-const uniqueTopVoters = [...new Set(topVotes.map((vote) => vote.voter))]
-console.log(uniqueTopVoters)
-
-// TODO: batch resolve uniqueTopVoters with Universal Resolver to return type `Profile`
-// Then have to reformat data to work across multiple Spaces
+// TODO: refactor script to work across multiple Snapshot Spaces

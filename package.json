@@ -5,13 +5,14 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./dist",
-    "dev": "tsc && node ./dist/index.js",
-    "start": "tsc && node ./dist/index.js"
+    "dev": "tsc && node --experimental-specifier-resolution=node ./dist/index.js",
+    "start": "tsc && node --experimental-specifier-resolution=node ./dist/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@ensdomains/ensjs": "^3.0.0-alpha.51",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
     "graphql-request": "^5.2.0"
