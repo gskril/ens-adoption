@@ -1,6 +1,6 @@
 import { request, gql } from 'graphql-request'
 
-import { SNAPSHOT_HUB_API } from './constants.js'
+import { SNAPSHOT_HUB_API } from '../constants.js'
 
 export async function getTopVoters(space: string) {
   const topVotersQuery = gql`
