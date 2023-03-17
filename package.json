@@ -8,8 +8,10 @@
   },
   "scripts": {
     "build": "yarn workspaces run build",
+    "build:backend": "yarn workspace backend build",
     "dev": "yarn workspace backend dev",
-    "start": "yarn workspace backend start"
+    "start": "yarn workspace backend start",
+    "start:backend": "yarn workspace backend start"
   },
   "devDependencies": {
     "@types/node": "^18.15.0",
