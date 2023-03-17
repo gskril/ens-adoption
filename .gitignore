@@ -1,5 +1,13 @@
 .env
 .DS_Store
-dist
 ignore
 node_modules
+dist
+dist-ssr
+*.local
+
+# Logs
+logs
+*.log
+yarn-debug.log*
+yarn-error.log*
