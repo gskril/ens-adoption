@@ -36,5 +36,7 @@ export async function getStatsForSpace(space: string) {
     profiles,
   }
 
+  console.log('Got stats for space', space)
+
   return result
 }
