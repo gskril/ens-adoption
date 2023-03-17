@@ -1,28 +1,17 @@
 {
   "name": "ens-adoption-daos",
-  "version": "1.0.0",
-  "type": "module",
-  "scripts": {
-    "build": "tsc",
-    "clean": "rm -rf ./dist",
-    "dev": "tsc && node --experimental-specifier-resolution=node ./dist/index.js",
-    "start": "tsc && node --experimental-specifier-resolution=node ./dist/index.js"
+  "private": true,
+  "workspaces": {
+    "packages": [
+      "apps/*"
+    ]
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@ensdomains/ensjs": "^3.0.0-alpha.51",
-    "@types/node-cron": "^3.0.7",
-    "dotenv": "^16.0.3",
-    "express": "^4.18.2",
-    "graphql": "^16.6.0",
-    "graphql-request": "^5.2.0",
-    "node-cache": "^5.1.2",
-    "node-cron": "^3.0.2"
+  "scripts": {
+    "build": "yarn workspaces run build",
+    "dev": "yarn workspace backend dev",
+    "start": "yarn workspace backend start"
   },
   "devDependencies": {
-    "@types/express": "^4.17.17",
     "@types/node": "^18.15.0",
     "prettier": "^2.8.4",
     "typescript": "^4.9.5"

@@ -1,6 +1,5 @@
 .env
 .DS_Store
-/dist
-/ignore
-/node_modules
-.vercel
+dist
+ignore
+node_modules

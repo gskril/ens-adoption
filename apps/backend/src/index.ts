@@ -7,7 +7,7 @@ import { getStatsForSpace } from './lib'
 import { TOP_SPACES } from './constants'
 
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8080
 
 const spaces = TOP_SPACES
 const cache = new NodeCache()
