@@ -18,7 +18,7 @@ app.get('/', (req, res) => {
   res.status(400).json({ message: 'Please enter a space' })
 })
 
-app.get('/:space', async (req, res) => {
+app.get('/space/:space', async (req, res) => {
   const { space } = req.params
   const stats = cache.get(space)
 
@@ -32,10 +32,16 @@ app.get('/:space', async (req, res) => {
       res.status(200).json(stats)
       cache.set(space, stats)
       spaces.push(space)
+      console.log(`Added ${space} to cache`)
     } catch (err) {
       res.status(400).json({ message: `Error getting space ${space}` })
     }
   }
+})
+
+app.get('/all', async (req, res) => {
+  const stats = cache.mget(spaces)
+  res.status(200).json(stats)
 })
 
 async function updateCache() {
