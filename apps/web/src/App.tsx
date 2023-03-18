@@ -53,21 +53,23 @@ export default function App() {
           </TableRow>
         ) : data ? (
           <>
-            {data.map((dao) => (
-              <TableRow key={dao.space}>
-                <span>
-                  <Link to={`https://snapshot.org/#/${dao.space}`}>
-                    {dao.space}
-                  </Link>
-                </span>
-                <span>{dao.stats.topVoters}</span>
-                <span>{dao.stats.profilesWithNames}</span>
-                <span>{dao.stats.records.avatar || 0}</span>
-                <span>{dao.stats.records['com.twitter'] || 0}</span>
-                <span>{dao.stats.records['com.github'] || 0}</span>
-                <span>{dao.stats.records.url || 0}</span>
-              </TableRow>
-            ))}
+            {data
+              .filter((dao) => dao.stats.topVoters > 0)
+              .map((dao) => (
+                <TableRow key={dao.space}>
+                  <span>
+                    <Link to={`https://snapshot.org/#/${dao.space}`}>
+                      {dao.space}
+                    </Link>
+                  </span>
+                  <span>{dao.stats.topVoters}</span>
+                  <span>{dao.stats.profilesWithNames}</span>
+                  <span>{dao.stats.records.avatar || 0}</span>
+                  <span>{dao.stats.records['com.twitter'] || 0}</span>
+                  <span>{dao.stats.records['com.github'] || 0}</span>
+                  <span>{dao.stats.records.url || 0}</span>
+                </TableRow>
+              ))}
           </>
         ) : (
           <TableRow style={emptyTableRowStyle}>
@@ -75,6 +77,11 @@ export default function App() {
           </TableRow>
         )}
       </Table>
+
+      <Typography>
+        Note: This data only includes the top 100 active voters by voting power
+        in each space from the last 6 months.
+      </Typography>
     </Container>
   )
 }
