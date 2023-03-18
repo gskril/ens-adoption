@@ -5,6 +5,12 @@ import { Container, Header, Link, Title } from './components/atoms'
 import { Table, TableHeader, TableRow } from './components/table'
 import { useFetch } from './hooks/useFetch'
 
+const emptyTableRowStyle = {
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'center',
+} as React.CSSProperties
+
 export default function App() {
   const { data, error } = useFetch<APIResponse[]>(
     'https://ens-adoption-daos.up.railway.app/all'
@@ -30,49 +36,45 @@ export default function App() {
         </Typography>
       </Header>
 
-      {error || (data && data.length === 0) ? (
-        <Typography>Error fetching data, try again later</Typography>
-      ) : data ? (
-        <Table>
-          <HeaderRow />
-          {data.map((dao) => (
-            <TableRow key={dao.space}>
-              <span>
-                <Link to={dao.space}>{dao.space}</Link>
-              </span>
-              <span>{dao.stats.topVoters}</span>
-              <span>{dao.stats.profilesWithNames}</span>
-              <span>{dao.stats.records.avatar || 0}</span>
-              <span>{dao.stats.records['com.twitter'] || 0}</span>
-              <span>{dao.stats.records['com.github'] || 0}</span>
-              <span>{dao.stats.records.url || 0}</span>
-            </TableRow>
-          ))}
-        </Table>
-      ) : (
-        <Table>
-          <HeaderRow />
-          <TableRow>
-            <span>
-              <Spinner color="accent" size="small" />
-            </span>
-          </TableRow>
-        </Table>
-      )}
-    </Container>
-  )
-}
+      <Table>
+        <TableHeader>
+          <span>DAO</span>
+          <span>Voters</span>
+          <span>Name</span>
+          <span>Avatar</span>
+          <span>Twitter</span>
+          <span>Github</span>
+          <span>Url</span>
+        </TableHeader>
 
-function HeaderRow() {
-  return (
-    <TableHeader>
-      <span>DAO</span>
-      <span>Voters</span>
-      <span>Name</span>
-      <span>Avatar</span>
-      <span>Twitter</span>
-      <span>Github</span>
-      <span>Url</span>
-    </TableHeader>
+        {error || (data && data.length === 0) ? (
+          <TableRow style={emptyTableRowStyle}>
+            <Typography>Error fetching data, try again later</Typography>
+          </TableRow>
+        ) : data ? (
+          <>
+            {data.map((dao) => (
+              <TableRow key={dao.space}>
+                <span>
+                  <Link to={`https://snapshot.org/#/${dao.space}`}>
+                    {dao.space}
+                  </Link>
+                </span>
+                <span>{dao.stats.topVoters}</span>
+                <span>{dao.stats.profilesWithNames}</span>
+                <span>{dao.stats.records.avatar || 0}</span>
+                <span>{dao.stats.records['com.twitter'] || 0}</span>
+                <span>{dao.stats.records['com.github'] || 0}</span>
+                <span>{dao.stats.records.url || 0}</span>
+              </TableRow>
+            ))}
+          </>
+        ) : (
+          <TableRow style={emptyTableRowStyle}>
+            <Spinner color="accent" size="small" />
+          </TableRow>
+        )}
+      </Table>
+    </Container>
   )
 }
