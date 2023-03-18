@@ -25,7 +25,7 @@ const rowStyles = css`
       min-width: 11rem;
     }
 
-    min-width: 5rem;
+    min-width: 4.5rem;
   }
 `
 
@@ -40,7 +40,7 @@ export const TableHeader = styled.div(
     font-size: 0.875rem;
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
-    border-bottom: 1px solid rgb(238, 227, 227);
+    border-bottom: 1px solid ${theme.colors.borderSecondary};
   `
 )
 
@@ -56,12 +56,12 @@ export const TableRow = styled.div(
       text-overflow: ellipsis;
     }
 
-    &:not(:last-child) {
-      border-bottom: 1px solid rgb(238, 227, 227);
+    &:nth-child(even) {
+      background-color: ${theme.colors.backgroundTertiary};
     }
 
-    &:not(:first-child) {
-      border-top: 1px solid #fff;
+    &:not(:last-child) {
+      border-bottom: 1px solid ${theme.colors.borderTertiary};
     }
   `
 )

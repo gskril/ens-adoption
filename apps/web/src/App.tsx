@@ -1,9 +1,9 @@
-import { Heading, Spinner, Typography } from '@ensdomains/thorin'
+import { Spinner, Typography } from '@ensdomains/thorin'
 
-import { Container, Header, Link } from './components/atoms'
+import { APIResponse } from './types'
+import { Container, Header, Link, Title } from './components/atoms'
 import { Table, TableHeader, TableRow } from './components/table'
 import { useFetch } from './hooks/useFetch'
-import { APIResponse } from './types'
 
 export default function App() {
   const { data, error } = useFetch<APIResponse[]>('http://localhost:8080/all')
@@ -17,14 +17,12 @@ export default function App() {
       }}
     >
       <Header>
-        <Heading as="h1" level="1">
-          ENS DAO Alliance
-        </Heading>
-        <Typography>
+        <Title>ENS DAO Alliance</Title>
+        <Typography as="p">
           This is a dashboard to explore the adoption of ENS within popular
           DAOs, inspired by{' '}
-          <Link to="https://dune.com/queries/2100006/3456746">
-            this Dune Analytics query
+          <Link to="https://dune.com/makoto/ens-dao-marketshare">
+            this Dune Analytics dashboard
           </Link>
           .
         </Typography>
