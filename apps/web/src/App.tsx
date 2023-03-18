@@ -6,7 +6,9 @@ import { Table, TableHeader, TableRow } from './components/table'
 import { useFetch } from './hooks/useFetch'
 
 export default function App() {
-  const { data, error } = useFetch<APIResponse[]>('http://localhost:8080/all')
+  const { data, error } = useFetch<APIResponse[]>(
+    'https://ens-adoption-daos.up.railway.app/all'
+  )
 
   return (
     <Container
