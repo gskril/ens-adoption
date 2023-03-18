@@ -14,9 +14,10 @@ export const Table = styled.div`
 const rowStyles = css`
   display: grid;
   gap: 1.25rem;
+  line-height: 1.3;
   font-weight: 500;
   padding: 0.75rem 1rem;
-  grid-template-columns: 1.5fr repeat(6, 1fr);
+  grid-template-columns: 2.5fr repeat(6, 1fr);
 `
 
 export const TableHeader = styled.div(

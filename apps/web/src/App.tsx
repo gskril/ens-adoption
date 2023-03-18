@@ -1,8 +1,13 @@
+import { Heading, Spinner, Typography } from '@ensdomains/thorin'
+
 import { Container, Header, Link } from './components/atoms'
-import { Heading, Typography } from '@ensdomains/thorin'
 import { Table, TableHeader, TableRow } from './components/table'
+import { useFetch } from './hooks/useFetch'
+import { APIResponse } from './types'
 
 export default function App() {
+  const { data, error } = useFetch<APIResponse>('http://localhost:8080/all')
+
   return (
     <Container
       as="main"
@@ -25,28 +30,43 @@ export default function App() {
         </Typography>
       </Header>
 
-      <Table>
-        <TableHeader>
-          <span>DAO</span>
-          <span>Voters</span>
-          <span>Name</span>
-          <span>Avatar</span>
-          <span>Twitter</span>
-          <span>Github</span>
-          <span>Url</span>
-        </TableHeader>
-        <TableRow>
-          <span>
-            <Link to="https://snapshot.org/#/ens.eth">ens.eth</Link>
-          </span>
-          <span>100</span>
-          <span>97</span>
-          <span>76</span>
-          <span>64</span>
-          <span>32</span>
-          <span>30</span>
-        </TableRow>
-      </Table>
+      {error ? (
+        <Typography>Error fetching data</Typography>
+      ) : data ? (
+        <Table>
+          <HeaderRow />
+          {Object.entries(data).map(([dao, space]) => (
+            <TableRow key={dao}>
+              <span>
+                <Link to={`https://snapshot.org/#/${dao}`}>{dao}</Link>
+              </span>
+            </TableRow>
+          ))}
+        </Table>
+      ) : (
+        <Table>
+          <HeaderRow />
+          <TableRow>
+            <span>
+              <Spinner color="accent" size="small" />
+            </span>
+          </TableRow>
+        </Table>
+      )}
     </Container>
+  )
+}
+
+function HeaderRow() {
+  return (
+    <TableHeader>
+      <span>DAO</span>
+      <span>Voters</span>
+      <span>Name</span>
+      <span>Avatar</span>
+      <span>Twitter</span>
+      <span>Github</span>
+      <span>Url</span>
+    </TableHeader>
   )
 }
