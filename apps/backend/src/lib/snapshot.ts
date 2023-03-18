@@ -9,14 +9,12 @@ function getUnixTimeSixMonthsAgo() {
 }
 
 export async function getTopVoters(space: string) {
-  const unixTimeSixMonthsAgo = getUnixTimeSixMonthsAgo()
-
   const topVotersQuery = gql`
-    query ($spaces: [String]) {
+    query ($spaces: [String], $time: Int) {
       votes(
         first: 1000
         orderBy: "vp"
-        where: { created_gte: unixTimeSixMonthsAgo, space_in: $spaces }
+        where: { created_gte: $time, space_in: $spaces }
       ) {
         proposal {
           title
@@ -31,11 +29,14 @@ export async function getTopVoters(space: string) {
     }
   `
 
+  const unixTimeSixMonthsAgo = getUnixTimeSixMonthsAgo()
+
   const topVotes = await request<{ votes: SnapshotVote[] }>(
     SNAPSHOT_HUB_API,
     topVotersQuery,
     {
       spaces: [space],
+      time: unixTimeSixMonthsAgo,
     }
   ).then((data) => data.votes)
 
