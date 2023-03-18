@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components'
 
 export const Table = styled.div`
   width: 100%;
-  overflow: hidden;
+  overflow-x: scroll;
   margin: 1rem 0;
   border-radius: 0.5rem;
   border: 2px solid #efeeee;
@@ -16,8 +16,17 @@ const rowStyles = css`
   gap: 1.25rem;
   line-height: 1.3;
   font-weight: 500;
+  width: fit-content;
   padding: 0.75rem 1rem;
-  grid-template-columns: 2.5fr repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
+
+  span {
+    &:first-child {
+      min-width: 11rem;
+    }
+
+    min-width: 5rem;
+  }
 `
 
 export const TableHeader = styled.div(
