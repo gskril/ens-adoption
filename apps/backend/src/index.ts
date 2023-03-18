@@ -43,7 +43,13 @@ app.get('/space/:space', async (req, res) => {
 
 app.get('/all', async (req, res) => {
   const stats = cache.mget(spaces)
-  res.status(200).json(stats)
+
+  // reformat stats to be an array
+  const statsArray = Object.keys(stats).map((key) => stats[key])
+
+  // remove any null values
+  const filteredStatsArray = statsArray.filter((stat) => stat !== null)
+  res.status(200).json(filteredStatsArray)
 })
 
 async function updateCache() {

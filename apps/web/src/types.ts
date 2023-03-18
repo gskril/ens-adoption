@@ -5,18 +5,16 @@ type Profile = {
 }
 
 export type APIResponse = {
-  [key: string]: {
-    space: string
-    stats: {
-      topVoters: number
-      profilesWithNames: number
-      records: {
-        'com.twitter': number
-        'com.github': number
-        url: number
-        avatar: number
-      }
+  space: string
+  stats: {
+    topVoters: number
+    profilesWithNames: number
+    records: {
+      'com.twitter': number
+      'com.github': number
+      url: number
+      avatar: number
     }
-    profiles: Profile[]
-  }[]
+  }
+  profiles: Profile[]
 }

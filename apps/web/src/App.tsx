@@ -6,7 +6,7 @@ import { useFetch } from './hooks/useFetch'
 import { APIResponse } from './types'
 
 export default function App() {
-  const { data, error } = useFetch<APIResponse>('http://localhost:8080/all')
+  const { data, error } = useFetch<APIResponse[]>('http://localhost:8080/all')
 
   return (
     <Container
@@ -30,16 +30,22 @@ export default function App() {
         </Typography>
       </Header>
 
-      {error ? (
-        <Typography>Error fetching data</Typography>
+      {error || (data && data.length === 0) ? (
+        <Typography>Error fetching data, try again later</Typography>
       ) : data ? (
         <Table>
           <HeaderRow />
-          {Object.entries(data).map(([dao, space]) => (
-            <TableRow key={dao}>
+          {data.map((dao) => (
+            <TableRow key={dao.space}>
               <span>
-                <Link to={`https://snapshot.org/#/${dao}`}>{dao}</Link>
+                <Link to={dao.space}>{dao.space}</Link>
               </span>
+              <span>{dao.stats.topVoters}</span>
+              <span>{dao.stats.profilesWithNames}</span>
+              <span>{dao.stats.records.avatar || 0}</span>
+              <span>{dao.stats.records['com.twitter'] || 0}</span>
+              <span>{dao.stats.records['com.github'] || 0}</span>
+              <span>{dao.stats.records.url || 0}</span>
             </TableRow>
           ))}
         </Table>
