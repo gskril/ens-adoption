@@ -2,16 +2,18 @@ import 'dotenv/config'
 import cron from 'node-cron'
 import express from 'express'
 import NodeCache from 'node-cache'
+import cors from 'cors'
 
 import { getStatsForSpace } from './lib'
 import { TOP_SPACES } from './constants'
 
-const app = express()
-const port = process.env.PORT || 8080
-
 const spaces = TOP_SPACES
 const cache = new NodeCache()
 
+const app = express()
+const port = process.env.PORT || 8080
+
+app.use(cors())
 app.listen(port, () => console.log(`App is running on port ${port}`))
 
 app.get('/', (req, res) => {
