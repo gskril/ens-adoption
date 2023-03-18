@@ -27,8 +27,8 @@ export default function App() {
       <Header>
         <Title>ENS DAO Alliance</Title>
         <Typography as="p">
-          This is a dashboard to explore the adoption of ENS within popular
-          DAOs, inspired by{' '}
+          This is a dashboard to explore the adoption of ENS records within DAOs
+          on Snapshot, inspired by{' '}
           <Link to="https://dune.com/makoto/ens-dao-marketshare">
             this Dune Analytics dashboard
           </Link>
@@ -38,7 +38,7 @@ export default function App() {
 
       <Table>
         <TableHeader>
-          <span>DAO</span>
+          <span>Snapshot</span>
           <span>Voters</span>
           <span>Name</span>
           <span>Avatar</span>

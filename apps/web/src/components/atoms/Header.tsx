@@ -10,7 +10,7 @@ export const Header = styled.header`
 
   margin-right: auto;
   margin-left: auto;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 2rem;
   text-align: center;
 `
