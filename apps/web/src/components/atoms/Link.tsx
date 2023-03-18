@@ -4,8 +4,9 @@ interface LinkProps {
   to: string
 }
 
-export const Link = styled.a.attrs<{ to: string }>(({ to }) => ({
+export const Link = styled.a.attrs<LinkProps>(({ to }) => ({
   href: to,
+  to: undefined,
   rel: 'noopener',
   target: to.startsWith('/') ? '_self' : '_blank',
 }))<LinkProps>`
