@@ -78,7 +78,7 @@ export const ProfileStack = styled.div`
     border-radius: 50%;
     margin-left: -0.5rem;
     transition: margin-left 0.15s ease-in-out;
-    box-shadow: 1px 1px 6px -1px rgba(0, 0, 0, 0.1);
+    box-shadow: var(--avatar-shadow);
 
     &:first-child {
       margin-left: 0 !important;

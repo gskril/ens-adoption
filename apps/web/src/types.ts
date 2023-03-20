@@ -1,6 +1,6 @@
 export type Profile = {
   address: string
-  name: string
+  name?: string | undefined
   textRecords: {
     [key: string]: string
   }

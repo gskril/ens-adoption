@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from './components/table'
+import { Modal } from './components/organisms/Modal'
 import { useFetch } from './hooks/useFetch'
 
 export default function App() {
@@ -30,6 +31,12 @@ export default function App() {
         paddingBottom: '2rem',
       }}
     >
+      <Modal
+        open={modal.isOpen}
+        onDismiss={() => setModal({ isOpen: false, profiles: [] })}
+        profiles={modal.profiles}
+      />
+
       <Header>
         <Title>ENS DAO Alliance</Title>
         <Typography as="p">
