@@ -1,4 +1,5 @@
 import { Spinner, Typography } from '@ensdomains/thorin'
+import styled from 'styled-components'
 
 import { APIResponse } from './types'
 import { Container, Header, Link, Title } from './components/atoms'
@@ -10,6 +11,31 @@ const emptyTableRowStyle = {
   width: '100%',
   justifyContent: 'center',
 } as React.CSSProperties
+
+const ProfileStack = styled.div`
+  display: flex;
+
+  img {
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: -0.5rem;
+    transition: margin-left 0.15s ease-in-out;
+    box-shadow: 1px 1px 6px -1px rgba(0, 0, 0, 0.1);
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover,
+    &:focus-visible {
+      img {
+        margin-left: -0.375rem;
+      }
+    }
+  }
+`
 
 export default function App() {
   const { data, error } = useFetch<APIResponse[]>(
@@ -62,7 +88,30 @@ export default function App() {
                       {dao.space}
                     </Link>
                   </span>
-                  <span>{dao.stats.topVoters}</span>
+                  <div
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.5rem',
+                    }}
+                  >
+                    <span>{dao.stats.topVoters}</span>
+                    <ProfileStack tabIndex={0}>
+                      {dao.profiles
+                        .filter((profile) => profile.textRecords.avatar)
+                        .slice(0, 5)
+                        .map((profile, index) => (
+                          <img
+                            src={profile.textRecords?.avatar}
+                            width={22}
+                            height={22}
+                            style={{
+                              zIndex: 5 - index,
+                            }}
+                          />
+                        ))}
+                    </ProfileStack>
+                  </div>
                   <span>{dao.stats.profilesWithNames}</span>
                   <span>{dao.stats.records.avatar || 0}</span>
                   <span>{dao.stats.records['com.twitter'] || 0}</span>

@@ -20,9 +20,13 @@ const rowStyles = css`
   padding: 0.75rem 1rem;
   grid-template-columns: repeat(7, 1fr);
 
-  span {
-    &:first-child {
+  & > * {
+    &:nth-child(1) {
       min-width: 11rem;
+    }
+
+    &:nth-child(2) {
+      min-width: 8.5rem;
     }
 
     min-width: 4.5rem;

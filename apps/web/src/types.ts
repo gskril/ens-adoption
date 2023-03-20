@@ -1,7 +1,9 @@
 type Profile = {
   address: string
   name: string
-  [key: string]: string
+  textRecords: {
+    [key: string]: string
+  }
 }
 
 export type APIResponse = {
