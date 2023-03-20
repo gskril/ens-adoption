@@ -1,4 +1,4 @@
-type Profile = {
+export type Profile = {
   address: string
   name: string
   textRecords: {

@@ -88,6 +88,8 @@ export const ProfileStack = styled.div`
   @media (hover: hover) {
     &:hover,
     &:focus-visible {
+      cursor: pointer;
+
       img {
         margin-left: -0.375rem;
       }

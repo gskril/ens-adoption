@@ -1,6 +1,7 @@
 import { Spinner, Typography } from '@ensdomains/thorin'
+import { useState } from 'react'
 
-import { APIResponse } from './types'
+import { APIResponse, Profile } from './types'
 import { Container, Header, Link, Title } from './components/atoms'
 import {
   emptyTableRowStyle,
@@ -15,6 +16,11 @@ export default function App() {
   const { data, error } = useFetch<APIResponse[]>(
     'https://ens-adoption-daos.up.railway.app/all'
   )
+
+  const [modal, setModal] = useState<{
+    isOpen: boolean
+    profiles: Profile[]
+  }>({ isOpen: false, profiles: [] })
 
   return (
     <Container
@@ -70,13 +76,21 @@ export default function App() {
                     }}
                   >
                     <span>{dao.stats.topVoters}</span>
-                    <ProfileStack tabIndex={0}>
+                    <ProfileStack
+                      tabIndex={0}
+                      onClick={() =>
+                        setModal({
+                          isOpen: true,
+                          profiles: dao.profiles,
+                        })
+                      }
+                    >
                       {dao.profiles
                         .filter((profile) => profile.textRecords.avatar)
                         .slice(0, 5)
                         .map((profile, index) => (
                           <img
-                            src={profile.textRecords?.avatar}
+                            src={profile.textRecords.avatar}
                             width={22}
                             height={22}
                             style={{
