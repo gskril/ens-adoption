@@ -71,7 +71,7 @@ export function Modal({ onDismiss, open, profiles }: ModalProps) {
             {profiles.map((profile) => (
               <div className="profile">
                 <img
-                  src={profile.textRecords.avatar || ''}
+                  src={profile.textRecords.avatar || '/av-default.png'}
                   width={36}
                   height={36}
                 />
