@@ -1,6 +1,8 @@
 import { ENS } from '@ensdomains/ensjs'
 import { ethers } from 'ethers'
 
+import { ProfileFromENS } from '../types'
+
 export async function getProfiles(addresses: string[]) {
   const provider = new ethers.providers.AlchemyProvider(
     'homestead',
@@ -28,15 +30,20 @@ export async function getProfiles(addresses: string[]) {
     return {
       name: profile?.name,
       address: addresses[index],
-      textRecords: profile?.records?.texts?.reduce(
-        (acc: { [key: string]: string }[], record) => {
-          acc.push({ [record.key]: record.value })
-          return acc
-        },
-        []
-      ),
+      textRecords: formatTextRecords(profile),
     }
   })
 
   return cleanedProfiles
+}
+
+function formatTextRecords(profile: ProfileFromENS | undefined) {
+  const textRecords: { [key: string]: string } = {}
+
+  profile?.records?.texts?.forEach((item) => {
+    if (item.type !== 'text') return
+    textRecords[item.key] = item.value
+  })
+
+  return textRecords
 }

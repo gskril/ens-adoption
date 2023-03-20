@@ -1,6 +1,7 @@
 import { request, gql } from 'graphql-request'
 
 import { SNAPSHOT_HUB_API } from '../constants.js'
+import { SnapshotVote } from '../types.js'
 
 function getUnixTimeSixMonthsAgo() {
   const currentDate = new Date()

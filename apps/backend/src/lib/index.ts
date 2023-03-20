@@ -13,8 +13,7 @@ export async function getStatsForSpace(space: string) {
   // count number of profiles that have certain text records
   const recordsStats = profiles.reduce(
     (acc: { [key: string]: number }, profile) => {
-      profile.textRecords?.forEach((record) => {
-        const key = Object.keys(record)[0]
+      Object.keys(profile.textRecords).forEach((key) => {
         if (acc[key]) {
           acc[key]++
         } else {
