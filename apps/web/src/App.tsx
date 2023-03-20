@@ -122,7 +122,14 @@ export default function App() {
           </>
         ) : (
           <TableRow style={emptyTableRowStyle}>
-            <Spinner color="accent" size="small" />
+            <span
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+              }}
+            >
+              <Spinner color="accent" size="small" />
+            </span>
           </TableRow>
         )}
       </Table>
