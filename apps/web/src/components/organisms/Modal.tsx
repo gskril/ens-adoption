@@ -2,6 +2,9 @@ import { Heading, mq } from '@ensdomains/thorin'
 import styled, { css } from 'styled-components'
 
 import { APIResponse } from '../../types'
+import { CrossIcon, GithubIcon, LinkIcon, TwitterIcon } from '../icons'
+import { Link } from '../atoms'
+import { sanitizeUrl, truncateAddress } from '../../utils'
 
 type ModalProps = {
   onDismiss: () => void
@@ -75,17 +78,41 @@ const Profiles = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
+`
 
-  .profile {
+const Profile = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  .left {
     display: flex;
     align-items: center;
     gap: 0.5rem;
+
+    img {
+      object-fit: cover;
+      border-radius: 50%;
+      box-shadow: var(--avatar-shadow);
+    }
   }
 
-  img {
-    object-fit: cover;
-    border-radius: 50%;
-    box-shadow: var(--avatar-shadow);
+  .right {
+    display: flex;
+    gap: 0.5rem;
+
+    a {
+      transition: opacity 0.15s ease-in-out;
+
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+
+    ${mq.xs.max(css`
+      gap: 0.25rem;
+    `)}
   }
 `
 
@@ -105,46 +132,51 @@ export function Modal({ onDismiss, open, space }: ModalProps) {
 
           <Profiles>
             {space.profiles.map((profile) => (
-              <div className="profile" key={profile.address}>
-                <img
-                  src={profile.textRecords.avatar || '/av-default.png'}
-                  loading="lazy"
-                  width={36}
-                  height={36}
-                  onError={(e) => {
-                    // Sometimes avatars are set to 404s
-                    e.currentTarget.src = '/av-default.png'
-                  }}
-                />
-                <span>{profile.name || truncateAddress(profile.address)}</span>
-              </div>
+              <Profile key={profile.address}>
+                <div className="left">
+                  <img
+                    src={profile.textRecords.avatar || '/av-default.png'}
+                    loading="lazy"
+                    width={36}
+                    height={36}
+                    onError={(e) => {
+                      // Sometimes avatars are set to 404s
+                      e.currentTarget.src = '/av-default.png'
+                    }}
+                  />
+                  <span>
+                    {profile.name || truncateAddress(profile.address)}
+                  </span>
+                </div>
+
+                <div className="right">
+                  {profile.textRecords['url'] && (
+                    <Link to={sanitizeUrl(profile.textRecords['url'])}>
+                      <LinkIcon />
+                    </Link>
+                  )}
+
+                  {profile.textRecords['com.github'] && (
+                    <Link
+                      to={`https://github.com/${profile.textRecords['com.github']}`}
+                    >
+                      <GithubIcon />
+                    </Link>
+                  )}
+
+                  {profile.textRecords['com.twitter'] && (
+                    <Link
+                      to={`https://twitter.com/${profile.textRecords['com.twitter']}`}
+                    >
+                      <TwitterIcon />
+                    </Link>
+                  )}
+                </div>
+              </Profile>
             ))}
           </Profiles>
         </div>
       </Wrapper>
     </>
-  )
-}
-
-function truncateAddress(address: string) {
-  return `${address.slice(0, 6)}...${address.slice(-4)}`
-}
-
-export const CrossIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="currentColor"
-      viewBox="0 0 96 96"
-      width="1em"
-      height="1em"
-      focusable="false"
-      shapeRendering="geometricPrecision"
-    >
-      <path
-        fill="currentColor"
-        d="M17.757 26.243a6 6 0 1 1 8.486-8.486L48 39.515l21.757-21.758a6 6 0 1 1 8.486 8.486L56.485 48l21.758 21.757a6 6 0 1 1-8.486 8.486L48 56.485 26.243 78.243a6 6 0 1 1-8.486-8.486L39.515 48 17.757 26.243Z"
-      ></path>
-    </svg>
   )
 }
