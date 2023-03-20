@@ -1,41 +1,15 @@
 import { Spinner, Typography } from '@ensdomains/thorin'
-import styled from 'styled-components'
 
 import { APIResponse } from './types'
 import { Container, Header, Link, Title } from './components/atoms'
-import { Table, TableHeader, TableRow } from './components/table'
+import {
+  emptyTableRowStyle,
+  ProfileStack,
+  Table,
+  TableHeader,
+  TableRow,
+} from './components/table'
 import { useFetch } from './hooks/useFetch'
-
-const emptyTableRowStyle = {
-  display: 'flex',
-  width: '100%',
-  justifyContent: 'center',
-} as React.CSSProperties
-
-const ProfileStack = styled.div`
-  display: flex;
-
-  img {
-    object-fit: cover;
-    border-radius: 50%;
-    margin-left: -0.5rem;
-    transition: margin-left 0.15s ease-in-out;
-    box-shadow: 1px 1px 6px -1px rgba(0, 0, 0, 0.1);
-
-    &:first-child {
-      margin-left: 0 !important;
-    }
-  }
-
-  @media (hover: hover) {
-    &:hover,
-    &:focus-visible {
-      img {
-        margin-left: -0.375rem;
-      }
-    }
-  }
-`
 
 export default function App() {
   const { data, error } = useFetch<APIResponse[]>(

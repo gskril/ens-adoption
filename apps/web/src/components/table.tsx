@@ -69,3 +69,34 @@ export const TableRow = styled.div(
     }
   `
 )
+
+export const ProfileStack = styled.div`
+  display: flex;
+
+  img {
+    object-fit: cover;
+    border-radius: 50%;
+    margin-left: -0.5rem;
+    transition: margin-left 0.15s ease-in-out;
+    box-shadow: 1px 1px 6px -1px rgba(0, 0, 0, 0.1);
+
+    &:first-child {
+      margin-left: 0 !important;
+    }
+  }
+
+  @media (hover: hover) {
+    &:hover,
+    &:focus-visible {
+      img {
+        margin-left: -0.375rem;
+      }
+    }
+  }
+`
+
+export const emptyTableRowStyle = {
+  display: 'flex',
+  width: '100%',
+  justifyContent: 'center',
+} as React.CSSProperties
