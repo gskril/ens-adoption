@@ -20,8 +20,8 @@ export default function App() {
 
   const [modal, setModal] = useState<{
     isOpen: boolean
-    profiles: Profile[]
-  }>({ isOpen: false, profiles: [] })
+    space: APIResponse | null
+  }>({ isOpen: false, space: null })
 
   return (
     <Container
@@ -33,8 +33,8 @@ export default function App() {
     >
       <Modal
         open={modal.isOpen}
-        onDismiss={() => setModal({ isOpen: false, profiles: [] })}
-        profiles={modal.profiles}
+        onDismiss={() => setModal({ isOpen: false, space: null })}
+        space={modal.space}
       />
 
       <Header>
@@ -88,7 +88,7 @@ export default function App() {
                       onClick={() =>
                         setModal({
                           isOpen: true,
-                          profiles: dao.profiles,
+                          space: dao,
                         })
                       }
                     >
@@ -97,11 +97,16 @@ export default function App() {
                         .slice(0, 5)
                         .map((profile, index) => (
                           <img
+                            key={profile.address}
                             src={profile.textRecords.avatar}
                             width={22}
                             height={22}
                             style={{
                               zIndex: 5 - index,
+                            }}
+                            onError={(e) => {
+                              // Sometimes avatars are set to 404s
+                              e.currentTarget.src = '/av-default.png'
                             }}
                           />
                         ))}

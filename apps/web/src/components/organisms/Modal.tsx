@@ -1,11 +1,12 @@
+import { Heading } from '@ensdomains/thorin'
 import styled from 'styled-components'
 
-import { Profile } from '../../types'
+import { APIResponse } from '../../types'
 
 type ModalProps = {
   onDismiss: () => void
   open: boolean
-  profiles: Profile[]
+  space: APIResponse | null
 }
 
 const Wrapper = styled.div`
@@ -29,6 +30,9 @@ const Wrapper = styled.div`
   }
 
   .content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
     z-index: 1;
     padding: 1.25rem;
     width: 100%;
@@ -59,21 +63,28 @@ const Profiles = styled.div`
   }
 `
 
-export function Modal({ onDismiss, open, profiles }: ModalProps) {
-  if (!open) return null
+export function Modal({ onDismiss, open, space }: ModalProps) {
+  if (!open || !space) return null
 
   return (
     <>
       <Wrapper>
         <div className="background" onClick={onDismiss} />
         <div className="content">
+          <Heading>{space.space}</Heading>
+
           <Profiles>
-            {profiles.map((profile) => (
-              <div className="profile">
+            {space.profiles.map((profile) => (
+              <div className="profile" key={profile.address}>
                 <img
                   src={profile.textRecords.avatar || '/av-default.png'}
+                  loading="lazy"
                   width={36}
                   height={36}
+                  onError={(e) => {
+                    // Sometimes avatars are set to 404s
+                    e.currentTarget.src = '/av-default.png'
+                  }}
                 />
                 <span>{profile.name || truncateAddress(profile.address)}</span>
               </div>
