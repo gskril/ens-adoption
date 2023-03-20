@@ -1,5 +1,5 @@
-import { Heading } from '@ensdomains/thorin'
-import styled from 'styled-components'
+import { Heading, mq } from '@ensdomains/thorin'
+import styled, { css } from 'styled-components'
 
 import { APIResponse } from '../../types'
 
@@ -30,6 +30,7 @@ const Wrapper = styled.div`
   }
 
   .content {
+    position: relative;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -43,6 +44,31 @@ const Wrapper = styled.div`
     border-radius: 1rem;
     background-color: #fff;
   }
+
+  .close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.6;
+    transition: opacity 0.15s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      opacity: 1;
+    }
+  }
+`
+
+const Title = styled(Heading)`
+  line-height: 1;
+
+  ${mq.sm.max(css`
+    font-size: 1.625rem;
+  `)}
+
+  ${mq.xs.max(css`
+    font-size: 1.3125rem;
+  `)}
 `
 
 const Profiles = styled.div`
@@ -71,7 +97,11 @@ export function Modal({ onDismiss, open, space }: ModalProps) {
       <Wrapper>
         <div className="background" onClick={onDismiss} />
         <div className="content">
-          <Heading>{space.space}</Heading>
+          <button className="close" onClick={onDismiss}>
+            <CrossIcon />
+          </button>
+
+          <Title>{space.space}</Title>
 
           <Profiles>
             {space.profiles.map((profile) => (
@@ -98,4 +128,23 @@ export function Modal({ onDismiss, open, space }: ModalProps) {
 
 function truncateAddress(address: string) {
   return `${address.slice(0, 6)}...${address.slice(-4)}`
+}
+
+export const CrossIcon = () => {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      fill="currentColor"
+      viewBox="0 0 96 96"
+      width="1em"
+      height="1em"
+      focusable="false"
+      shapeRendering="geometricPrecision"
+    >
+      <path
+        fill="currentColor"
+        d="M17.757 26.243a6 6 0 1 1 8.486-8.486L48 39.515l21.757-21.758a6 6 0 1 1 8.486 8.486L56.485 48l21.758 21.757a6 6 0 1 1-8.486 8.486L48 56.485 26.243 78.243a6 6 0 1 1-8.486-8.486L39.515 48 17.757 26.243Z"
+      ></path>
+    </svg>
+  )
 }

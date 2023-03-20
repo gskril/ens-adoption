@@ -84,13 +84,12 @@ export default function App() {
                   >
                     <span>{dao.stats.topVoters}</span>
                     <ProfileStack
-                      tabIndex={0}
-                      onClick={() =>
+                      onClick={() => {
                         setModal({
                           isOpen: true,
                           space: dao,
                         })
-                      }
+                      }}
                     >
                       {dao.profiles
                         .filter((profile) => profile.textRecords.avatar)
