@@ -42,6 +42,14 @@ function formatTextRecords(profile: ProfileFromENS | undefined) {
 
   profile?.records?.texts?.forEach((item) => {
     if (item.type !== 'text') return
+
+    if (item.key === 'avatar') {
+      textRecords[
+        'avatar'
+      ] = `https://metadata.ens.domains/mainnet/avatar/${profile.name}`
+      return
+    }
+
     textRecords[item.key] = item.value
   })
 
