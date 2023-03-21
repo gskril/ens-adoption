@@ -5,6 +5,7 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf ./dist",
+    "config": "cp .env.example .env",
     "dev": "tsc && node --experimental-specifier-resolution=node ./dist/index.js",
     "start": "tsc && node --experimental-specifier-resolution=node ./dist/index.js"
   },
