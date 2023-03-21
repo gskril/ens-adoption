@@ -9,3 +9,7 @@ export function sanitizeUrl(url: string) {
 
   return `https://${url}`
 }
+
+export function sanitizeUsername(handle: string) {
+  return handle.replace(/^@/, '')
+}

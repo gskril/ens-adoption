@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components'
 import { APIResponse } from '../../types'
 import { CrossIcon, GithubIcon, LinkIcon, TwitterIcon } from '../icons'
 import { Link } from '../atoms'
-import { sanitizeUrl, truncateAddress } from '../../utils'
+import { sanitizeUrl, sanitizeUsername, truncateAddress } from '../../utils'
 
 type ModalProps = {
   onDismiss: () => void
@@ -158,7 +158,9 @@ export function Modal({ onDismiss, open, space }: ModalProps) {
 
                   {profile.textRecords['com.github'] && (
                     <Link
-                      to={`https://github.com/${profile.textRecords['com.github']}`}
+                      to={`https://github.com/${sanitizeUsername(
+                        profile.textRecords['com.github']
+                      )}`}
                     >
                       <GithubIcon />
                     </Link>
@@ -166,7 +168,9 @@ export function Modal({ onDismiss, open, space }: ModalProps) {
 
                   {profile.textRecords['com.twitter'] && (
                     <Link
-                      to={`https://twitter.com/${profile.textRecords['com.twitter']}`}
+                      to={`https://twitter.com/${sanitizeUsername(
+                        profile.textRecords['com.twitter']
+                      )}`}
                     >
                       <TwitterIcon />
                     </Link>
