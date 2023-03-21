@@ -6,6 +6,7 @@ import cors from 'cors'
 
 import { getStatsForSpace } from './lib'
 import { TOP_SPACES } from './constants'
+import { Result } from './types'
 
 const spaces = TOP_SPACES
 const cache = new NodeCache()
@@ -45,11 +46,20 @@ app.get('/all', async (req, res) => {
   const stats = cache.mget(spaces)
 
   // reformat stats to be an array
-  const statsArray = Object.keys(stats).map((key) => stats[key])
+  const statsArray = Object.keys(stats).map((key) => stats[key]) as Result[]
 
   // remove any null values
   const filteredStatsArray = statsArray.filter((stat) => stat !== null)
-  res.status(200).json(filteredStatsArray)
+
+  // order by # of voters then # of primary names set
+  const sortedStatsArray = filteredStatsArray.sort((a, b) => {
+    if (a.stats.topVoters === b.stats.topVoters) {
+      return b.stats.profilesWithNames - a.stats.profilesWithNames
+    }
+    return b.stats.topVoters - a.stats.topVoters
+  })
+
+  res.status(200).json(sortedStatsArray)
 })
 
 async function updateCache() {

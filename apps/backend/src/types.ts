@@ -39,13 +39,19 @@ type Profile = {
   }
 }
 
-type Result = {
-  name: string
-  voters_count: number
-  primary_set: number
-  twitter_set: number
-  avatar_set: number
-  voters: Profile[]
+export type Result = {
+  space: string
+  stats: {
+    topVoters: number
+    profilesWithNames: number
+    records: {
+      'com.twitter': number
+      'com.github': number
+      url: number
+      avatar: number
+    }
+  }
+  profiles: Profile[]
 }
 
 type SnapshotSpace = {
