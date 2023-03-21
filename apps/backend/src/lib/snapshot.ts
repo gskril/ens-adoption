@@ -11,9 +11,10 @@ function getUnixTimeSixMonthsAgo() {
 
 export async function getTopVoters(space: string) {
   const topVotersQuery = gql`
-    query ($spaces: [String], $time: Int) {
+    query ($skip: Int, $spaces: [String], $time: Int) {
       votes(
         first: 1000
+        skip: $skip
         orderBy: "vp"
         where: { created_gte: $time, space_in: $spaces }
       ) {
@@ -32,18 +33,28 @@ export async function getTopVoters(space: string) {
 
   const unixTimeSixMonthsAgo = getUnixTimeSixMonthsAgo()
 
-  const topVotes = await request<{ votes: SnapshotVote[] }>(
-    SNAPSHOT_HUB_API,
-    topVotersQuery,
-    {
-      spaces: [space],
-      time: unixTimeSixMonthsAgo,
-    }
-  ).then((data) => data.votes)
+  const allVotes = new Array() as SnapshotVote[]
 
-  const uniqueTopVoters = [
-    ...new Set(topVotes.map((vote) => vote.voter)),
-  ].slice(0, 100)
+  // keep looping until we get less than 1000 votes in a single request
+  while (allVotes.length % 1000 === 0) {
+    const votes = await request<{ votes: SnapshotVote[] }>(
+      SNAPSHOT_HUB_API,
+      topVotersQuery,
+      {
+        skip: allVotes.length,
+        spaces: [space],
+        time: unixTimeSixMonthsAgo,
+      }
+    ).then((data) => data.votes)
+
+    allVotes.push(...votes)
+  }
+
+  const uniqueTopVoters = [...new Set(allVotes.map((vote) => vote.voter))]
+
+  console.log(
+    `Found ${allVotes.length} votes for ${space} in the last 6 months, with ${uniqueTopVoters.length} unique voters.`
+  )
 
   return {
     dao: space,
