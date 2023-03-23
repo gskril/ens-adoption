@@ -38,7 +38,7 @@ export default function App() {
       />
 
       <Header>
-        <Title>ENS DAO Alliance</Title>
+        <Title>Governance Adoption of ENS</Title>
         <Typography as="p">
           This is a dashboard to explore the adoption of ENS records within DAOs
           on Snapshot, inspired by{' '}

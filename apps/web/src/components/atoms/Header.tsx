@@ -5,7 +5,7 @@ export const Header = styled.header`
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 45ch;
+  max-width: 55ch;
   gap: 0.75rem;
 
   margin-right: auto;
@@ -22,7 +22,7 @@ export const Title = styled(Heading).attrs(() => ({
     font-size: ${theme.fontSizes.headingTwo};
 
     ${mq.sm.min(css`
-      font-size: ${theme.fontSizes.headingOne};
+      font-size: 2.375rem;
     `)}
   `
 )
