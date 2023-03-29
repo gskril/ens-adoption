@@ -1,7 +1,7 @@
 import { Spinner, Typography } from '@ensdomains/thorin'
 import { useState } from 'react'
 
-import { APIResponse, Profile } from './types'
+import { APIResponse } from './types'
 import { Container, Header, Link, Title } from './components/atoms'
 import {
   emptyTableRowStyle,
