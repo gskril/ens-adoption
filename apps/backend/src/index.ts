@@ -78,7 +78,7 @@ async function updateCache() {
 // Seed cache on server start
 await updateCache()
 
-// Update cache every hour
-cron.schedule('0 * * * *', async () => {
+// Update cache every 5 hours
+cron.schedule('0 */5 * * *', async () => {
   await updateCache()
 })
